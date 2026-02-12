@@ -15,6 +15,7 @@ use vectorcade_shared::{
     game::{Game, GameCtx, GameMeta},
     input::Key,
     normalize_angle,
+    projectile::{Projectile3D, update_projectiles_3d},
 };
 
 use enemies::{Enemy, EnemyKind};
@@ -37,6 +38,7 @@ pub struct Battlezone {
     pub state: GameState,
     pub enemies: Vec<Enemy>,
     pub obstacles: Vec<Obstacle>,
+    pub shots: Vec<Projectile3D>,
     pub fire_cooldown: f32,
     pub font_style: FontStyleId,
 }
@@ -55,6 +57,7 @@ impl Battlezone {
             state: GameState::Instructions,
             enemies: Vec::new(),
             obstacles: Vec::new(),
+            shots: Vec::new(),
             fire_cooldown: 0.0,
             font_style: FontStyleId::ATARI,
         }
@@ -81,6 +84,7 @@ impl Game for Battlezone {
         self.state = GameState::Instructions;
         self.enemies.clear();
         self.obstacles.clear();
+        self.shots.clear();
         self.fire_cooldown = 0.0;
         world::spawn_obstacles(&mut self.obstacles, ctx.rng);
     }
@@ -92,6 +96,8 @@ impl Game for Battlezone {
         }
         if self.state == GameState::GameOver { return; }
         update_player(self, ctx, dt);
+        update_projectiles_3d(&mut self.shots, dt);
+        check_shot_collisions(self);
         enemies::update_enemies(&mut self.enemies, self.pos, dt);
         if self.enemies.is_empty() { self.spawn_enemy(ctx); }
     }
@@ -104,6 +110,7 @@ impl Game for Battlezone {
         }
         rendering::render_horizon(out);
         rendering::render_world(out, &self.obstacles, &self.enemies, self.pos, self.angle);
+        rendering::render_shots(out, &self.shots, self.pos, self.angle);
         rendering::render_crosshair(out);
         rendering::render_hud(out, self.score, self.lives, self.font_style);
         if self.state == GameState::GameOver {
@@ -125,19 +132,25 @@ fn update_player(game: &mut Battlezone, ctx: &GameCtx, dt: f32) {
     if fwd { game.pos += dir * speed * dt; }
     if back { game.pos -= dir * speed * dt * 0.5; }
     game.fire_cooldown -= dt;
-    if ctx.input.key(Key::Space).is_down && game.fire_cooldown <= 0.0 {
+    if ctx.input.key(Key::Space).went_down && game.fire_cooldown <= 0.0 {
         game.fire_cooldown = 0.5;
-        // Check for enemy hit
-        for e in &mut game.enemies {
-            let to_enemy = e.pos - game.pos;
-            let dist = to_enemy.length();
-            let enemy_angle = to_enemy.z.atan2(-to_enemy.x);
-            if (normalize_angle(enemy_angle - game.angle)).abs() < 0.15 && dist < 30.0 {
-                e.alive = false;
+        // Fire a projectile in the direction we're facing
+        let shot = Projectile3D::new(game.pos, dir, 30.0, 50.0);
+        game.shots.push(shot);
+    }
+}
+
+fn check_shot_collisions(game: &mut Battlezone) {
+    for shot in &mut game.shots {
+        for enemy in &mut game.enemies {
+            if enemy.alive && shot.hits_sphere(enemy.pos, 1.5) {
+                shot.alive = false;
+                enemy.alive = false;
                 game.score += 1000;
                 break;
             }
         }
     }
+    game.shots.retain(|s| s.alive);
     game.enemies.retain(|e| e.alive);
 }

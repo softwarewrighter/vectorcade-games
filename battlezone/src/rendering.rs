@@ -4,7 +4,8 @@ use glam::{Vec2, Vec3};
 use vectorcade_shared::{
     draw::{DrawCmd, Stroke},
     font::FontStyleId,
-    project_line_3d, rotate_point_y,
+    project_line_3d, project_persp, rotate_point_y,
+    projectile::Projectile3D,
 };
 
 use crate::{GREEN, RED, enemies::Enemy, world::{Obstacle, ObstacleKind}};
@@ -153,4 +154,28 @@ fn render_enemy(out: &mut Vec<DrawCmd>, enemy: &Enemy, player_pos: Vec3, player_
     let turret_base = rotated + Vec3::new(0.0, 0.6, 0.0);
     let gun_end = turret_base + Vec3::new(0.0, 0.3, 1.2);
     draw_line_3d(out, turret_base, gun_end);
+}
+
+/// Render player shots as small bright points.
+pub fn render_shots(out: &mut Vec<DrawCmd>, shots: &[Projectile3D], player_pos: Vec3, player_angle: f32) {
+    for shot in shots {
+        if !shot.alive { continue; }
+        let rel = shot.pos - player_pos;
+        let rotated = rotate_point_y(rel, -player_angle);
+        if rotated.z > -0.5 { continue; } // Behind camera
+        if let Some(screen_pos) = project_persp(rotated, FOV, ASPECT) {
+            // Draw shot as a small cross
+            let size = 0.02;
+            out.push(DrawCmd::Polyline {
+                pts: vec![screen_pos - Vec2::new(size, 0.0), screen_pos + Vec2::new(size, 0.0)],
+                closed: false,
+                stroke: Stroke::new(GREEN, 3.0),
+            });
+            out.push(DrawCmd::Polyline {
+                pts: vec![screen_pos - Vec2::new(0.0, size), screen_pos + Vec2::new(0.0, size)],
+                closed: false,
+                stroke: Stroke::new(GREEN, 3.0),
+            });
+        }
+    }
 }
