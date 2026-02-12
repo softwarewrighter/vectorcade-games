@@ -4,9 +4,9 @@ use glam::Vec2;
 use vectorcade_shared::{Rgba, draw::{DrawCmd, Stroke}, font::FontStyleId};
 
 const WHITE: Rgba = Rgba::WHITE;
-const BOARD_SIZE: f32 = 1.6;
+const BOARD_SIZE: f32 = 1.3;
 const SQUARE_SIZE: f32 = BOARD_SIZE / 8.0;
-const BOARD_OFFSET: Vec2 = Vec2::new(-0.8, -0.8);
+const BOARD_OFFSET: Vec2 = Vec2::new(-0.55, -0.75);
 
 pub fn square_center(row: usize, col: usize) -> Vec2 {
     BOARD_OFFSET + Vec2::new((col as f32 + 0.5) * SQUARE_SIZE, (row as f32 + 0.5) * SQUARE_SIZE)
@@ -61,23 +61,23 @@ pub fn render_labels(out: &mut Vec<DrawCmd>, style: FontStyleId) {
     let files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     for (i, &f) in files.iter().enumerate() {
         out.push(DrawCmd::Text {
-            pos: Vec2::new(BOARD_OFFSET.x + (i as f32 + 0.4) * SQUARE_SIZE, BOARD_OFFSET.y - 0.06),
-            text: f.to_string(), size_px: 10.0, color: WHITE, style,
+            pos: Vec2::new(BOARD_OFFSET.x + (i as f32 + 0.35) * SQUARE_SIZE, BOARD_OFFSET.y - 0.12),
+            text: f.to_string(), size_px: 32.0, color: WHITE, style,
         });
     }
     for i in 0..8 {
         out.push(DrawCmd::Text {
-            pos: Vec2::new(BOARD_OFFSET.x - 0.06, BOARD_OFFSET.y + (i as f32 + 0.35) * SQUARE_SIZE),
-            text: (i + 1).to_string(), size_px: 10.0, color: WHITE, style,
+            pos: Vec2::new(BOARD_OFFSET.x - 0.12, BOARD_OFFSET.y + (i as f32 + 0.25) * SQUARE_SIZE),
+            text: (i + 1).to_string(), size_px: 32.0, color: WHITE, style,
         });
     }
 }
 
 pub fn render_title(out: &mut Vec<DrawCmd>, style: FontStyleId) {
     out.push(DrawCmd::Text {
-        pos: Vec2::new(-0.35, 0.88),
-        text: "IBM 2250".to_string(),
-        size_px: 48.0,
+        pos: Vec2::new(-0.70, 0.68),
+        text: "IBM 2250 STATIC DEMO".to_string(),
+        size_px: 40.0,
         color: WHITE,
         style,
     });
