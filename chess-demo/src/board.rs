@@ -72,3 +72,13 @@ pub fn render_labels(out: &mut Vec<DrawCmd>, style: FontStyleId) {
         });
     }
 }
+
+pub fn render_title(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+    out.push(DrawCmd::Text {
+        pos: Vec2::new(-0.35, 0.88),
+        text: "IBM 2250".to_string(),
+        size_px: 48.0,
+        color: WHITE,
+        style,
+    });
+}

@@ -36,6 +36,7 @@ impl Game for ChessDemo {
 
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
+        board::render_title(out, self.font_style);
         board::render_board(out);
         render_pieces(out);
         board::render_labels(out, self.font_style);
