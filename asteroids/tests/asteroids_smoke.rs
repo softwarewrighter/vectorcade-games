@@ -1,4 +1,4 @@
-use pong::Pong;
+use asteroids::Asteroids;
 use vectorcade_shared::Xorshift64;
 use vectorcade_shared::game::{AudioOut, Game, GameCtx, ScreenInfo};
 use vectorcade_shared::input::{Axis, Button, InputState, Key};
@@ -20,7 +20,7 @@ struct NoAudio;
 impl AudioOut for NoAudio {}
 
 #[test]
-fn pong_advances() {
+fn asteroids_advances() {
     let input = NoInput;
     let audio = NoAudio;
     let mut rng = Xorshift64::new(12345);
@@ -31,8 +31,9 @@ fn pong_advances() {
         screen: ScreenInfo::default(),
         now_s: 0.0,
     };
-    let mut g = Pong::new();
-    let x0 = g.ball.x;
+    let mut g = Asteroids::new();
+    g.reset(&mut ctx);
+    let initial_asteroids = g.asteroids.len();
+    assert!(initial_asteroids > 0, "should spawn asteroids on reset");
     g.update(&mut ctx, 0.016);
-    assert!(g.ball.x != x0);
 }

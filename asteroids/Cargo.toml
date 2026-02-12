@@ -1,0 +1,10 @@
+[package]
+name = "asteroids"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[dependencies]
+vectorcade-shared = { version = "0.1.0" }
+vectorcade-fonts = { version = "0.1.0" }
+glam = { version = "0.27", default-features = false, features = ["libm"] }
