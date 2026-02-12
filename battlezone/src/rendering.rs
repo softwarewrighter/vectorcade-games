@@ -15,12 +15,12 @@ const ASPECT: f32 = 4.0 / 3.0;
 /// Render instruction screen.
 pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
     let lines = [
-        ("BATTLEZONE", -0.30, 0.5, 24.0),
-        ("LEFT/RIGHT: ROTATE", -0.38, 0.2, 12.0),
-        ("UP/DOWN: MOVE", -0.28, 0.05, 12.0),
-        ("SPACE: FIRE", -0.22, -0.1, 12.0),
-        ("DESTROY ENEMY TANKS", -0.40, -0.35, 12.0),
-        ("PRESS SPACE TO START", -0.42, -0.6, 14.0),
+        ("BATTLEZONE", -0.42, 0.55, 96.0),
+        ("LEFT/RIGHT: ROTATE", -0.65, 0.25, 48.0),
+        ("UP/DOWN: MOVE", -0.48, 0.05, 48.0),
+        ("SPACE: FIRE", -0.38, -0.15, 48.0),
+        ("DESTROY ENEMY TANKS", -0.70, -0.4, 48.0),
+        ("PRESS SPACE TO START", -0.70, -0.7, 56.0),
     ];
     for (text, x, y, size) in lines {
         out.push(DrawCmd::Text {

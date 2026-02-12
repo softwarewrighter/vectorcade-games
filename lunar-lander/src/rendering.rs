@@ -123,13 +123,13 @@ pub fn render_crashed(out: &mut Vec<DrawCmd>, style: FontStyleId) {
 
 pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
     let lines = [
-        ("LUNAR LANDER", -0.3, 0.6, 24.0),
-        ("LEFT/RIGHT - ROTATE", -0.4, 0.25, 12.0),
-        ("UP OR SPACE - THRUST", -0.42, 0.1, 12.0),
-        ("LAND ON FLAT PADS", -0.38, -0.1, 12.0),
-        ("LAND SLOWLY AND LEVEL", -0.44, -0.25, 12.0),
-        ("CONSERVE FUEL FOR BONUS", -0.48, -0.4, 12.0),
-        ("PRESS SPACE TO START", -0.42, -0.7, 14.0),
+        ("LUNAR LANDER", -0.50, 0.65, 96.0),
+        ("LEFT/RIGHT - ROTATE", -0.70, 0.35, 48.0),
+        ("UP OR SPACE - THRUST", -0.72, 0.15, 48.0),
+        ("LAND ON FLAT PADS", -0.62, -0.05, 48.0),
+        ("LAND SLOWLY AND LEVEL", -0.75, -0.25, 48.0),
+        ("CONSERVE FUEL FOR BONUS", -0.82, -0.45, 48.0),
+        ("PRESS SPACE TO START", -0.70, -0.75, 56.0),
     ];
     for (text, x, y, size) in lines {
         out.push(DrawCmd::Text {

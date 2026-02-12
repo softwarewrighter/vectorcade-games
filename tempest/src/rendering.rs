@@ -11,11 +11,11 @@ use crate::{BLUE, CYAN, GREEN, MAGENTA, RED, YELLOW, Blaster, Shot, enemies::{En
 /// Render instruction screen.
 pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
     let lines = [
-        ("TEMPEST", -0.20, 0.5, 24.0, YELLOW),
-        ("LEFT/RIGHT: MOVE", -0.35, 0.2, 12.0, BLUE),
-        ("SPACE: FIRE", -0.22, 0.05, 12.0, BLUE),
-        ("DESTROY ALL ENEMIES", -0.40, -0.2, 12.0, BLUE),
-        ("PRESS SPACE TO START", -0.42, -0.5, 14.0, YELLOW),
+        ("TEMPEST", -0.30, 0.55, 96.0, YELLOW),
+        ("LEFT/RIGHT: MOVE", -0.60, 0.25, 48.0, BLUE),
+        ("SPACE: FIRE", -0.38, 0.0, 48.0, BLUE),
+        ("DESTROY ALL ENEMIES", -0.70, -0.25, 48.0, BLUE),
+        ("PRESS SPACE TO START", -0.70, -0.6, 56.0, YELLOW),
     ];
     for (text, x, y, size, color) in lines {
         out.push(DrawCmd::Text {
