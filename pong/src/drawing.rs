@@ -1,6 +1,6 @@
 use glam::Vec2;
 use vectorcade_shared::{
-    color::Rgba,
+    Rgba,
     draw::{DrawCmd, Stroke, rect_wire},
     font::FontStyleId,
 };
@@ -14,7 +14,11 @@ pub fn render_court(out: &mut Vec<DrawCmd>, paddle_l: f32, paddle_r: f32, ball: 
     out.push(DrawCmd::Polyline {
         pts: vec![Vec2::new(0.0, -1.0), Vec2::new(0.0, 1.0)],
         closed: false,
-        stroke: Stroke { color: Rgba::WHITE.with_a(0.6), width_px: 2.0, glow: 0.0 },
+        stroke: Stroke {
+            color: Rgba::WHITE.with_a(0.6),
+            width_px: 2.0,
+            glow: 0.0,
+        },
     });
 
     // Paddles
@@ -30,7 +34,11 @@ pub fn render_court(out: &mut Vec<DrawCmd>, paddle_l: f32, paddle_r: f32, ball: 
     ));
 
     // Ball
-    out.push(rect_wire(ball - Vec2::splat(0.02), ball + Vec2::splat(0.02), white));
+    out.push(rect_wire(
+        ball - Vec2::splat(0.02),
+        ball + Vec2::splat(0.02),
+        white,
+    ));
 }
 
 pub fn render_scores(out: &mut Vec<DrawCmd>, score_l: u32, score_r: u32, style: FontStyleId) {

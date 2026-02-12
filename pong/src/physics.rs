@@ -1,5 +1,5 @@
 use glam::Vec2;
-use vectorcade_shared::{game::GameCtx, input::Key, math::clamp};
+use vectorcade_shared::{clamp, game::GameCtx, input::Key};
 
 use crate::Pong;
 
@@ -14,10 +14,18 @@ pub fn update_paddles(pong: &mut Pong, ctx: &GameCtx, dt: f32) {
     let right_up = ctx.input.key(Key::Up).is_down;
     let right_dn = ctx.input.key(Key::Down).is_down;
 
-    if left_up { pong.paddle_l += PADDLE_SPEED * dt; }
-    if left_dn { pong.paddle_l -= PADDLE_SPEED * dt; }
-    if right_up { pong.paddle_r += PADDLE_SPEED * dt; }
-    if right_dn { pong.paddle_r -= PADDLE_SPEED * dt; }
+    if left_up {
+        pong.paddle_l += PADDLE_SPEED * dt;
+    }
+    if left_dn {
+        pong.paddle_l -= PADDLE_SPEED * dt;
+    }
+    if right_up {
+        pong.paddle_r += PADDLE_SPEED * dt;
+    }
+    if right_dn {
+        pong.paddle_r -= PADDLE_SPEED * dt;
+    }
 
     pong.paddle_l = clamp(pong.paddle_l, -0.8, 0.8);
     pong.paddle_r = clamp(pong.paddle_r, -0.8, 0.8);
@@ -47,8 +55,12 @@ fn bounce_paddles(pong: &mut Pong) {
     let hit_r = (pong.ball.x - PADDLE_X_R).abs() < 0.03
         && (pong.ball.y - pong.paddle_r).abs() < PADDLE_HALF;
 
-    if hit_l && pong.vel.x < 0.0 { pong.vel.x = -pong.vel.x; }
-    if hit_r && pong.vel.x > 0.0 { pong.vel.x = -pong.vel.x; }
+    if hit_l && pong.vel.x < 0.0 {
+        pong.vel.x = -pong.vel.x;
+    }
+    if hit_r && pong.vel.x > 0.0 {
+        pong.vel.x = -pong.vel.x;
+    }
 }
 
 fn check_scoring(pong: &mut Pong) {

@@ -3,7 +3,7 @@ mod physics;
 
 use glam::Vec2;
 use vectorcade_shared::{
-    color::Rgba,
+    Rgba,
     draw::DrawCmd,
     font::FontStyleId,
     game::{Game, GameCtx, GameMeta},
@@ -17,6 +17,12 @@ pub struct Pong {
     pub score_l: u32,
     pub score_r: u32,
     pub font_style: FontStyleId,
+}
+
+impl Default for Pong {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl Pong {
@@ -35,7 +41,10 @@ impl Pong {
 
 impl Game for Pong {
     fn metadata(&self) -> GameMeta {
-        GameMeta { name: "Pong", preferred_aspect: Some(4.0 / 3.0) }
+        GameMeta {
+            name: "Pong",
+            preferred_aspect: Some(4.0 / 3.0),
+        }
     }
 
     fn reset(&mut self, _ctx: &mut GameCtx) {
