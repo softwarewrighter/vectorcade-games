@@ -10,7 +10,7 @@
 | **Dependencies** | Ready | `vectorcade-shared` and `vectorcade-fonts` available |
 | **Pong** | Complete | Core logic complete, smoke test passing |
 | **Asteroids** | Complete | Full implementation, smoke test passing |
-| **Lunar Lander** | Not Started | Planned |
+| **Lunar Lander** | Complete | Gravity/thrust physics, smoke test passing |
 | **Battlezone** | Not Started | Planned |
 | **Tempest** | Not Started | Planned |
 
@@ -32,6 +32,7 @@ Dependencies are available in sibling repos:
 | vectorcade-games | ~15 | Registry facade (`all_games()`) | Complete |
 | pong | ~200 | Pong game logic | Complete |
 | asteroids | ~630 | Asteroids game logic | Complete |
+| lunar-lander | ~280 | Lunar Lander game logic | Complete |
 
 ## Game Implementation Progress
 
@@ -70,7 +71,19 @@ Dependencies are available in sibling repos:
 | Determinism test | Todo | Same inputs -> same state |
 
 ### Lunar Lander
-*Not started*
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Lander physics | Done | Gravity, thrust, rotation |
+| Fuel management | Done | Burns with thrust, HUD display |
+| Terrain generation | Done | Procedural mountains with landing pads |
+| Landing pads | Done | Multiple pads with score multipliers |
+| Collision detection | Done | Surface collision, safe landing check |
+| Landing conditions | Done | Velocity and angle requirements |
+| Score system | Done | Based on fuel remaining |
+| HUD | Done | Fuel, velocity, altitude display |
+| Game states | Done | Playing, Landed, Crashed |
+| Smoke test | Done | lunar_lander_smoke.rs |
 
 ### Battlezone
 *Not started*
@@ -84,7 +97,7 @@ Dependencies are available in sibling repos:
 |------|-------|-------------|------------|-------------|
 | Pong | Done | Todo | Todo | Todo |
 | Asteroids | Done | Todo | Todo | Todo |
-| Lunar Lander | Todo | Todo | Todo | Todo |
+| Lunar Lander | Done | Todo | Todo | Todo |
 | Battlezone | Todo | Todo | Todo | Todo |
 | Tempest | Todo | Todo | Todo | Todo |
 
@@ -109,6 +122,7 @@ Dependencies are available in sibling repos:
 
 | Date | Change |
 |------|--------|
+| 2026-02-12 | Lunar Lander implementation complete |
 | 2026-02-12 | Asteroids implementation complete |
 | 2026-02-12 | Dependencies (shared, fonts) now available |
 | 2026-02-12 | Project initialized with Pong stub |

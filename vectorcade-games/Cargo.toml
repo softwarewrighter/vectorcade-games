@@ -9,3 +9,4 @@ description = "Game collection wrapper for VectorCade."
 vectorcade-shared = { version = "0.1.0" }
 pong = { path = "../pong" }
 asteroids = { path = "../asteroids" }
+lunar-lander = { path = "../lunar-lander" }
