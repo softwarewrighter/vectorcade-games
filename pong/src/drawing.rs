@@ -63,8 +63,8 @@ pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
     let lines = [
         ("PONG", -0.12, 0.6, 96.0),
         ("2 PLAYER GAME", -0.50, 0.35, 56.0),
-        ("LEFT PADDLE: UP/DOWN", -0.60, 0.1, 48.0),
-        ("RIGHT PADDLE: W/S", -0.50, -0.15, 48.0),
+        ("LEFT PADDLE: W/S", -0.50, 0.1, 48.0),
+        ("RIGHT PADDLE: UP/DOWN", -0.65, -0.15, 48.0),
         ("PRESS SPACE TO START", -0.70, -0.6, 56.0),
     ];
     for (text, x, y, size) in lines {

@@ -9,10 +9,10 @@ const PADDLE_X_L: f32 = -0.9;
 const PADDLE_X_R: f32 = 0.9;
 
 pub fn update_paddles(pong: &mut Pong, ctx: &GameCtx, dt: f32) {
-    let left_up = ctx.input.key(Key::Up).is_down;
-    let left_dn = ctx.input.key(Key::Down).is_down;
-    let right_up = ctx.input.key(Key::W).is_down;
-    let right_dn = ctx.input.key(Key::S).is_down;
+    let left_up = ctx.input.key(Key::W).is_down;
+    let left_dn = ctx.input.key(Key::S).is_down;
+    let right_up = ctx.input.key(Key::Up).is_down;
+    let right_dn = ctx.input.key(Key::Down).is_down;
 
     if left_up {
         pong.paddle_l += PADDLE_SPEED * dt;
