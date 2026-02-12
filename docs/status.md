@@ -11,7 +11,7 @@
 | **Pong** | Complete | Core logic complete, smoke test passing |
 | **Asteroids** | Complete | Full implementation, smoke test passing |
 | **Lunar Lander** | Complete | Gravity/thrust physics, smoke test passing |
-| **Battlezone** | Not Started | Planned |
+| **Battlezone** | Complete | 3D tank combat, smoke test passing |
 | **Tempest** | Not Started | Planned |
 | **Chess Demo** | Complete | Static vector chess board display |
 
@@ -34,6 +34,7 @@ Dependencies are available in sibling repos:
 | pong | ~200 | Pong game logic | Complete |
 | asteroids | ~630 | Asteroids game logic | Complete |
 | lunar-lander | ~280 | Lunar Lander game logic | Complete |
+| battlezone | ~290 | Battlezone 3D tank combat | Complete |
 | chess-demo | ~180 | Vector chess board demo | Complete |
 
 ## Game Implementation Progress
@@ -88,7 +89,17 @@ Dependencies are available in sibling repos:
 | Smoke test | Done | lunar_lander_smoke.rs |
 
 ### Battlezone
-*Not started*
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Player movement | Done | Tank controls (rotate, forward/back) |
+| 3D rendering | Done | Perspective projection, cubes, pyramids |
+| Enemy tanks | Done | Track player, simple AI |
+| Shooting | Done | Crosshair aiming, hit detection |
+| Obstacles | Done | Procedural cube/pyramid/block placement |
+| HUD | Done | Score (red), lives (red) - matches arcade overlay |
+| Colors | Done | Green gameplay, red HUD (authentic) |
+| Smoke test | Done | battlezone_smoke.rs |
 
 ### Tempest
 *Not started*
@@ -110,7 +121,7 @@ Dependencies are available in sibling repos:
 | Pong | Done | Todo | Todo | Todo |
 | Asteroids | Done | Todo | Todo | Todo |
 | Lunar Lander | Done | Todo | Todo | Todo |
-| Battlezone | Todo | Todo | Todo | Todo |
+| Battlezone | Done | Todo | Todo | Todo |
 | Tempest | Todo | Todo | Todo | Todo |
 
 ## Performance Targets
@@ -134,6 +145,7 @@ Dependencies are available in sibling repos:
 
 | Date | Change |
 |------|--------|
+| 2026-02-12 | Battlezone implementation complete |
 | 2026-02-12 | Chess Demo implementation complete |
 | 2026-02-12 | Lunar Lander implementation complete |
 | 2026-02-12 | Asteroids implementation complete |

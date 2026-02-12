@@ -1,3 +1,3 @@
 [workspace]
-members = ["vectorcade-games", "pong", "asteroids", "lunar-lander", "chess-demo"]
+members = ["vectorcade-games", "pong", "asteroids", "lunar-lander", "chess-demo", "battlezone"]
 resolver = "2"

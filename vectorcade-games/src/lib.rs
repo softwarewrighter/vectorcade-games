@@ -8,5 +8,6 @@ pub fn all_games() -> Vec<Box<dyn Game + Send>> {
         Box::new(asteroids::Asteroids::new()),
         Box::new(lunar_lander::LunarLander::new()),
         Box::new(chess_demo::ChessDemo::new()),
+        Box::new(battlezone::Battlezone::new()),
     ]
 }
