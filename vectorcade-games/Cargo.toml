@@ -1,0 +1,10 @@
+[package]
+name = "vectorcade-games"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Game collection wrapper for VectorCade."
+
+[dependencies]
+vectorcade-shared = { version = "0.1.0" }
+pong = { path = "../pong" }
