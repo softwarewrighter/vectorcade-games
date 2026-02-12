@@ -34,7 +34,7 @@ pub fn render_ship(out: &mut Vec<DrawCmd>, ship: &Ship) {
         out.push(DrawCmd::Polyline {
             pts,
             closed: false,
-            stroke: Stroke::new(Rgba::rgb(1.0, 0.6, 0.2), 2.0),
+            stroke: Stroke::new(WHITE, 2.0),
         });
     }
 }

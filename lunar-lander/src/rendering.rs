@@ -11,7 +11,6 @@ use crate::lander::Lander;
 use crate::terrain::Terrain;
 
 const WHITE: Rgba = Rgba::WHITE;
-const GREEN: Rgba = Rgba::GREEN;
 
 pub fn render_terrain(out: &mut Vec<DrawCmd>, terrain: &Terrain) {
     // Draw terrain surface
@@ -20,12 +19,12 @@ pub fn render_terrain(out: &mut Vec<DrawCmd>, terrain: &Terrain) {
         closed: false,
         stroke: Stroke::new(WHITE, 1.5),
     });
-    // Draw landing pads (highlighted)
+    // Draw landing pads (thicker line to stand out)
     for pad in &terrain.pads {
         out.push(DrawCmd::Polyline {
             pts: vec![Vec2::new(pad.x_min, pad.y), Vec2::new(pad.x_max, pad.y)],
             closed: false,
-            stroke: Stroke::new(GREEN, 3.0),
+            stroke: Stroke::new(WHITE, 3.0),
         });
         // Multiplier indicator
         let mid_x = (pad.x_min + pad.x_max) / 2.0;
@@ -33,7 +32,7 @@ pub fn render_terrain(out: &mut Vec<DrawCmd>, terrain: &Terrain) {
             pos: Vec2::new(mid_x - 0.02, pad.y - 0.05),
             text: format!("x{}", pad.multiplier),
             size_px: 10.0,
-            color: GREEN,
+            color: WHITE,
             style: FontStyleId::ATARI,
         });
     }
@@ -67,11 +66,7 @@ pub fn render_lander(out: &mut Vec<DrawCmd>, lander: &Lander) {
             lander.pos + rotate(Vec2::new(0.0, -0.07)),
             lander.pos + rotate(Vec2::new(0.012, -0.02)),
         ];
-        out.push(DrawCmd::Polyline {
-            pts: flame,
-            closed: false,
-            stroke: Stroke::new(Rgba::rgb(1.0, 0.6, 0.2), 2.0),
-        });
+        out.push(DrawCmd::Polyline { pts: flame, closed: false, stroke: Stroke::new(WHITE, 2.0) });
     }
 }
 
@@ -80,7 +75,7 @@ pub fn render_hud(out: &mut Vec<DrawCmd>, lander: &Lander, style: FontStyleId) {
         pos: Vec2::new(-0.95, 0.9),
         text: format!("FUEL: {:3.0}", lander.fuel),
         size_px: 14.0,
-        color: if lander.fuel > 20.0 { WHITE } else { Rgba::RED },
+        color: WHITE,
         style,
     });
     out.push(DrawCmd::Text {
@@ -104,7 +99,7 @@ pub fn render_landed(out: &mut Vec<DrawCmd>, score: u32, style: FontStyleId) {
         pos: Vec2::new(-0.25, 0.1),
         text: "LANDED!".to_string(),
         size_px: 24.0,
-        color: GREEN,
+        color: WHITE,
         style,
     });
     out.push(DrawCmd::Text {
@@ -121,7 +116,7 @@ pub fn render_crashed(out: &mut Vec<DrawCmd>, style: FontStyleId) {
         pos: Vec2::new(-0.25, 0.0),
         text: "CRASHED!".to_string(),
         size_px: 24.0,
-        color: Rgba::RED,
+        color: WHITE,
         style,
     });
 }
