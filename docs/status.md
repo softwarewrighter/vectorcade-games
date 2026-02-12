@@ -7,9 +7,9 @@
 
 | Aspect | Status | Notes |
 |--------|--------|-------|
-| **Dependencies** | Blocked | Requires `vectorcade-shared` and `vectorcade-fonts` |
-| **Pong** | In Progress | Core logic complete, needs polish |
-| **Asteroids** | Not Started | Planned |
+| **Dependencies** | Ready | `vectorcade-shared` and `vectorcade-fonts` available |
+| **Pong** | Complete | Core logic complete, smoke test passing |
+| **Asteroids** | Complete | Full implementation, smoke test passing |
 | **Lunar Lander** | Not Started | Planned |
 | **Battlezone** | Not Started | Planned |
 | **Tempest** | Not Started | Planned |
@@ -18,19 +18,20 @@ Legend: [x] Complete | [~] In Progress | [ ] Not Started
 
 ## Dependency Status
 
-This repo cannot compile until these sibling repos exist:
+Dependencies are available in sibling repos:
 
 | Dependency | Path | Status |
 |------------|------|--------|
-| vectorcade-shared | `../vectorcade-shared/vectorcade-shared/` | Needed |
-| vectorcade-fonts | `../vectorcade-fonts/vectorcade-fonts/` | Needed |
+| vectorcade-shared | `../vectorcade-shared/vectorcade-shared/` | Ready |
+| vectorcade-fonts | `../vectorcade-fonts/vectorcade-fonts/` | Ready |
 
 ## Crate Inventory
 
 | Crate | Lines | Purpose | Status |
 |-------|-------|---------|--------|
-| vectorcade-games | ~10 | Registry facade (`all_games()`) | Stub |
-| pong | ~130 | Pong game logic | Core done |
+| vectorcade-games | ~15 | Registry facade (`all_games()`) | Complete |
+| pong | ~200 | Pong game logic | Complete |
+| asteroids | ~630 | Asteroids game logic | Complete |
 
 ## Game Implementation Progress
 
@@ -50,7 +51,23 @@ This repo cannot compile until these sibling repos exist:
 | Determinism test | Todo | Same inputs -> same state |
 
 ### Asteroids
-*Not started*
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Ship movement | Done | Thrust, rotation, friction |
+| Shooting | Done | Cooldown, bullet limit (8 max) |
+| Asteroid spawning | Done | Edge spawning, 3 sizes |
+| Asteroid splitting | Done | Large->Medium->Small |
+| Collision detection | Done | Bullets/asteroids, ship/asteroids |
+| Scoring | Done | 20/50/100 points by size |
+| Lives system | Done | 3 lives, respawn invulnerability |
+| Level progression | Done | More asteroids per level |
+| Particle effects | Done | Explosion particles |
+| Screen wraparound | Done | All entities wrap |
+| HUD | Done | Score, lives display |
+| Game over | Done | End screen on 0 lives |
+| Smoke test | Done | asteroids_smoke.rs |
+| Determinism test | Todo | Same inputs -> same state |
 
 ### Lunar Lander
 *Not started*
@@ -66,7 +83,7 @@ This repo cannot compile until these sibling repos exist:
 | Game | Smoke | Determinism | Edge Cases | Integration |
 |------|-------|-------------|------------|-------------|
 | Pong | Done | Todo | Todo | Todo |
-| Asteroids | Todo | Todo | Todo | Todo |
+| Asteroids | Done | Todo | Todo | Todo |
 | Lunar Lander | Todo | Todo | Todo | Todo |
 | Battlezone | Todo | Todo | Todo | Todo |
 | Tempest | Todo | Todo | Todo | Todo |
@@ -92,6 +109,8 @@ This repo cannot compile until these sibling repos exist:
 
 | Date | Change |
 |------|--------|
+| 2026-02-12 | Asteroids implementation complete |
+| 2026-02-12 | Dependencies (shared, fonts) now available |
 | 2026-02-12 | Project initialized with Pong stub |
 
 ---
