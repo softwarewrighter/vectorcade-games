@@ -12,3 +12,4 @@ asteroids = { path = "../asteroids" }
 lunar-lander = { path = "../lunar-lander" }
 chess-demo = { path = "../chess-demo" }
 battlezone = { path = "../battlezone" }
+tempest = { path = "../tempest" }

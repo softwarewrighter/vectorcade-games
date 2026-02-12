@@ -12,7 +12,7 @@
 | **Asteroids** | Complete | Full implementation, smoke test passing |
 | **Lunar Lander** | Complete | Gravity/thrust physics, smoke test passing |
 | **Battlezone** | Complete | 3D tank combat, smoke test passing |
-| **Tempest** | Not Started | Planned |
+| **Tempest** | Complete | Tube-shooter, multi-colored, smoke test passing |
 | **Chess Demo** | Complete | Static vector chess board display |
 
 Legend: [x] Complete | [~] In Progress | [ ] Not Started
@@ -35,6 +35,7 @@ Dependencies are available in sibling repos:
 | asteroids | ~630 | Asteroids game logic | Complete |
 | lunar-lander | ~280 | Lunar Lander game logic | Complete |
 | battlezone | ~290 | Battlezone 3D tank combat | Complete |
+| tempest | ~300 | Tempest tube-shooter | Complete |
 | chess-demo | ~180 | Vector chess board demo | Complete |
 
 ## Game Implementation Progress
@@ -102,7 +103,18 @@ Dependencies are available in sibling repos:
 | Smoke test | Done | battlezone_smoke.rs |
 
 ### Tempest
-*Not started*
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Tube geometry | Done | Circular 16-segment tube |
+| Player movement | Done | Rim navigation (left/right) |
+| Shooting | Done | Shots travel down tube |
+| Enemy types | Done | Flipper, Tanker, Spiker |
+| Enemy AI | Done | Climb toward rim |
+| Collision detection | Done | Shots/enemies, enemies/player |
+| Colors | Done | Multi-color (yellow, blue, red, green, cyan, magenta) |
+| HUD | Done | Score, level, lives |
+| Smoke test | Done | tempest_smoke.rs |
 
 ### Chess Demo
 
@@ -122,7 +134,7 @@ Dependencies are available in sibling repos:
 | Asteroids | Done | Todo | Todo | Todo |
 | Lunar Lander | Done | Todo | Todo | Todo |
 | Battlezone | Done | Todo | Todo | Todo |
-| Tempest | Todo | Todo | Todo | Todo |
+| Tempest | Done | Todo | Todo | Todo |
 
 ## Performance Targets
 
@@ -145,6 +157,7 @@ Dependencies are available in sibling repos:
 
 | Date | Change |
 |------|--------|
+| 2026-02-12 | Tempest implementation complete |
 | 2026-02-12 | Battlezone implementation complete |
 | 2026-02-12 | Chess Demo implementation complete |
 | 2026-02-12 | Lunar Lander implementation complete |
