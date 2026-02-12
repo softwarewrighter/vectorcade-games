@@ -2,11 +2,11 @@
 
 This repo is part of a multi-repo DAG:
 
-- `vectorcade-shared` (root) → shared types + traits
-- `vectorcade-fonts` → vector glyph/stroke fonts (depends on shared)
-- `vectorcade-games` → game logic crates (depends on shared + fonts)
-- `vectorcade-render-wgpu` → renderer backend (depends on shared)
-- `vectorcade-web-yew` → integration app (depends on shared + games + renderer)
+- `vectorcade-shared` (root) - shared types + traits
+- `vectorcade-fonts` - vector glyph/stroke fonts (depends on shared)
+- `vectorcade-games` - game logic crates (depends on shared + fonts)
+- `vectorcade-render-wgpu` - renderer backend (depends on shared)
+- `vectorcade-web-yew` - integration app (depends on shared + games + renderer)
 
 ## Rules of engagement
 

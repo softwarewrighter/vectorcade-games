@@ -2,7 +2,7 @@
 
 ## Phase 1: Pong Completion (Current)
 
-### 1.1 Core Gameplay ✅
+### 1.1 Core Gameplay (Done)
 - [x] Ball movement and bouncing
 - [x] Paddle movement (keyboard)
 - [x] Collision detection
@@ -18,7 +18,7 @@
 
 ### 1.3 Testing
 - [x] Basic smoke test
-- [ ] Determinism test (same inputs → same state)
+- [ ] Determinism test (same inputs -> same state)
 - [ ] Edge case tests (corner bounces, simultaneous hits)
 
 ## Phase 2: Asteroids
@@ -32,14 +32,14 @@
 ### 2.2 Asteroids
 - [ ] Large/medium/small variants
 - [ ] Random initial positions and velocities
-- [ ] Split on hit (large→medium→small)
+- [ ] Split on hit (large->medium->small)
 - [ ] Screen wraparound
 
 ### 2.3 Combat
 - [ ] Bullet firing (Space key)
 - [ ] Bullet lifetime
 - [ ] Fire rate limiting
-- [ ] Collision: bullet↔asteroid, ship↔asteroid
+- [ ] Collision: bullet<->asteroid, ship<->asteroid
 
 ### 2.4 Effects
 - [ ] Explosion particles (polyline bursts)
@@ -128,7 +128,7 @@
 - [ ] Level progression (tube shape changes)
 - [ ] Depth-based brightness
 
-## Phase 6: Integration & Polish
+## Phase 6: Integration and Polish
 
 ### 6.1 Game Registry
 - [ ] `all_games()` returns all five games
@@ -148,16 +148,16 @@
 ## Dependencies
 
 ```
-Phase 1 (Pong) ─────────────────────────────┐
-                                            │
-Phase 2 (Asteroids) ────────────────────────┤
-                                            ├─► Phase 6 (Integration)
-Phase 3 (Lunar Lander) ─────────────────────┤
-                                            │
-Phase 4 (Battlezone) ───┬───────────────────┤
-                        │                   │
-Phase 5 (Tempest) ──────┘                   │
-        (shares 3D projection work)         │
+Phase 1 (Pong) ---------------------------------+
+                                               |
+Phase 2 (Asteroids) ---------------------------+
+                                               +--> Phase 6 (Integration)
+Phase 3 (Lunar Lander) ------------------------+
+                                               |
+Phase 4 (Battlezone) ----+---------------------+
+                         |                     |
+Phase 5 (Tempest) -------+                     |
+        (shares 3D projection work)            |
 ```
 
 ## Milestones

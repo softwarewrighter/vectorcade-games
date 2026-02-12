@@ -64,9 +64,9 @@ Games operate in normalized world coordinates:
 
 ```
         +1.0
-          │
-   -1.0 ──┼── +1.0
-          │
+          |
+   -1.0 --+-- +1.0
+          |
         -1.0
 ```
 

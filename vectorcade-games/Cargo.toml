@@ -1,7 +1,7 @@
 [package]
 name = "vectorcade-games"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 license = "MIT"
 description = "Game collection wrapper for VectorCade."
 

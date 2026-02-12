@@ -8,15 +8,15 @@
 
 ```
 vectorcade-shared (root)
-       │
-       ├───────────────┐
-       ▼               ▼
+       |
+       +---------------+
+       v               v
 vectorcade-fonts   vectorcade-render-wgpu
-       │
-       ▼
-vectorcade-games ──────► (depends on shared + fonts)
-       │
-       ▼
+       |
+       v
+vectorcade-games ------> (depends on shared + fonts)
+       |
+       v
 vectorcade-web-yew (integration)
 ```
 
@@ -24,18 +24,18 @@ vectorcade-web-yew (integration)
 
 ```
 vectorcade-games/
-├── Cargo.toml           # Workspace root
-├── vectorcade-games/    # Facade crate (re-exports all games)
-│   ├── Cargo.toml
-│   └── src/lib.rs       # all_games() registry
-├── pong/                # Individual game crate
-│   ├── Cargo.toml
-│   ├── src/lib.rs
-│   └── tests/
-├── asteroids/           # (planned)
-├── lunar-lander/        # (planned)
-├── battlezone/          # (planned)
-└── tempest/             # (planned)
++-- Cargo.toml           # Workspace root
++-- vectorcade-games/    # Facade crate (re-exports all games)
+|   +-- Cargo.toml
+|   +-- src/lib.rs       # all_games() registry
++-- pong/                # Individual game crate
+|   +-- Cargo.toml
+|   +-- src/lib.rs
+|   +-- tests/
++-- asteroids/           # (planned)
++-- lunar-lander/        # (planned)
++-- battlezone/          # (planned)
++-- tempest/             # (planned)
 ```
 
 ## Game Trait Architecture
@@ -65,20 +65,20 @@ pub trait Game {
 
 1. **Pure Logic**: Game crates contain no platform-specific code
 2. **Deterministic**: Fixed timestep + seeded RNG enables replays and testing
-3. **Display List**: All rendering via `DrawCmd` enum—games don't know about wgpu/canvas
+3. **Display List**: All rendering via `DrawCmd` enum - games don't know about wgpu/canvas
 4. **Font Abstraction**: Text uses `FontStyleId` so each game can have distinct visual style
 5. **Testable**: Headless smoke tests verify game logic without a renderer
 
 ## Data Flow
 
 ```
-Input Events → InputState → Game::update() → Game::render() → Vec<DrawCmd>
-                                                                    │
-                                                                    ▼
-                                                            VectorRenderer
-                                                                    │
-                                                                    ▼
-                                                              GPU/Canvas
+Input Events -> InputState -> Game::update() -> Game::render() -> Vec<DrawCmd>
+                                                                       |
+                                                                       v
+                                                               VectorRenderer
+                                                                       |
+                                                                       v
+                                                                 GPU/Canvas
 ```
 
 ## Local Development

@@ -18,10 +18,10 @@ Provide a collection of classic vector arcade game implementations that demonstr
 
 ### FR-1: Game Trait Compliance
 All games MUST implement the `Game` trait:
-- `metadata()` → name, aspect ratio hints
-- `reset()` → return to initial state
-- `update(dt)` → advance simulation by fixed timestep
-- `render()` → emit `DrawCmd` display list
+- `metadata()` -> name, aspect ratio hints
+- `reset()` -> return to initial state
+- `update(dt)` -> advance simulation by fixed timestep
+- `render()` -> emit `DrawCmd` display list
 
 ### FR-2: Input Abstraction
 Games MUST use abstract input via `GameCtx.input`:
@@ -73,7 +73,7 @@ Each game MUST include smoke tests that:
 ### Asteroids (Planned)
 - Ship rotation and thrust
 - Wraparound screen edges
-- Asteroid splitting (large → medium → small)
+- Asteroid splitting (large -> medium -> small)
 - Bullet lifetime and cooldown
 - Particle effects for explosions
 
