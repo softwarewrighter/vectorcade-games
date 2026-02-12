@@ -120,3 +120,20 @@ pub fn render_crashed(out: &mut Vec<DrawCmd>, style: FontStyleId) {
         style,
     });
 }
+
+pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+    let lines = [
+        ("LUNAR LANDER", -0.3, 0.6, 24.0),
+        ("LEFT/RIGHT - ROTATE", -0.4, 0.25, 12.0),
+        ("UP OR SPACE - THRUST", -0.42, 0.1, 12.0),
+        ("LAND ON FLAT PADS", -0.38, -0.1, 12.0),
+        ("LAND SLOWLY AND LEVEL", -0.44, -0.25, 12.0),
+        ("CONSERVE FUEL FOR BONUS", -0.48, -0.4, 12.0),
+        ("PRESS SPACE TO START", -0.42, -0.7, 14.0),
+    ];
+    for (text, x, y, size) in lines {
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(x, y), text: text.to_string(), size_px: size, color: WHITE, style,
+        });
+    }
+}

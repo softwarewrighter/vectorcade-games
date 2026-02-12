@@ -9,6 +9,7 @@ use vectorcade_shared::{
     draw::DrawCmd,
     font::FontStyleId,
     game::{Game, GameCtx, GameMeta},
+    input::Key,
 };
 
 use entities::{Asteroid, Bullet, Particle, Ship};
@@ -28,6 +29,7 @@ pub struct Asteroids {
     pub font_style: FontStyleId,
     pub game_over: bool,
     pub respawn_timer: f32,
+    pub showing_instructions: bool,
 }
 
 impl Default for Asteroids {
@@ -49,6 +51,7 @@ impl Asteroids {
             font_style: FontStyleId::ATARI,
             game_over: false,
             respawn_timer: 0.0,
+            showing_instructions: true,
         }
     }
 
@@ -78,23 +81,24 @@ impl Game for Asteroids {
         self.level = 1;
         self.game_over = false;
         self.respawn_timer = 0.0;
+        self.showing_instructions = true;
         self.spawn_level_asteroids(ctx);
     }
 
     fn update(&mut self, ctx: &mut GameCtx, dt: f32) {
-        if self.game_over {
+        if self.showing_instructions {
+            if ctx.input.key(Key::Space).went_down {
+                self.showing_instructions = false;
+            }
             return;
         }
-
+        if self.game_over { return; }
         physics::update_ship(&mut self.ship, ctx, dt);
         physics::update_bullets(&mut self.bullets, dt);
         physics::update_asteroids(&mut self.asteroids, dt);
         physics::update_particles(&mut self.particles, dt);
-
         physics::handle_shooting(&self.ship, &mut self.bullets, ctx, dt);
         physics::handle_collisions(self, ctx);
-
-        // Check for level complete
         if self.asteroids.is_empty() {
             self.level += 1;
             self.spawn_level_asteroids(ctx);
@@ -103,27 +107,17 @@ impl Game for Asteroids {
 
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
-
+        if self.showing_instructions {
+            rendering::render_instructions(out, self.font_style);
+            return;
+        }
         if !self.game_over && self.respawn_timer <= 0.0 {
             rendering::render_ship(out, &self.ship);
         }
-
-        for asteroid in &self.asteroids {
-            rendering::render_asteroid(out, asteroid);
-        }
-
-        for bullet in &self.bullets {
-            rendering::render_bullet(out, bullet);
-        }
-
-        for particle in &self.particles {
-            rendering::render_particle(out, particle);
-        }
-
+        for asteroid in &self.asteroids { rendering::render_asteroid(out, asteroid); }
+        for bullet in &self.bullets { rendering::render_bullet(out, bullet); }
+        for particle in &self.particles { rendering::render_particle(out, particle); }
         rendering::render_hud(out, self.score, self.lives, self.font_style);
-
-        if self.game_over {
-            rendering::render_game_over(out, self.font_style);
-        }
+        if self.game_over { rendering::render_game_over(out, self.font_style); }
     }
 }

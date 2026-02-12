@@ -110,3 +110,19 @@ pub fn render_game_over(out: &mut Vec<DrawCmd>, style: FontStyleId) {
         style,
     });
 }
+
+pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+    let lines = [
+        ("ASTEROIDS", -0.22, 0.6, 24.0),
+        ("LEFT/RIGHT - ROTATE", -0.4, 0.25, 12.0),
+        ("UP - THRUST", -0.24, 0.1, 12.0),
+        ("SPACE - FIRE", -0.26, -0.05, 12.0),
+        ("DESTROY ALL ASTEROIDS", -0.45, -0.3, 12.0),
+        ("PRESS SPACE TO START", -0.42, -0.65, 14.0),
+    ];
+    for (text, x, y, size) in lines {
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(x, y), text: text.to_string(), size_px: size, color: WHITE, style,
+        });
+    }
+}

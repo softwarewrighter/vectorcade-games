@@ -7,6 +7,7 @@ use vectorcade_shared::{
     draw::DrawCmd,
     font::FontStyleId,
     game::{Game, GameCtx, GameMeta},
+    input::Key,
 };
 
 pub struct Pong {
@@ -17,6 +18,7 @@ pub struct Pong {
     pub score_l: u32,
     pub score_r: u32,
     pub font_style: FontStyleId,
+    pub showing_instructions: bool,
 }
 
 impl Default for Pong {
@@ -35,6 +37,7 @@ impl Pong {
             score_l: 0,
             score_r: 0,
             font_style: FontStyleId::ATARI,
+            showing_instructions: true,
         }
     }
 }
@@ -54,16 +57,27 @@ impl Game for Pong {
         self.paddle_r = 0.0;
         self.score_l = 0;
         self.score_r = 0;
+        self.showing_instructions = true;
     }
 
     fn update(&mut self, ctx: &mut GameCtx, dt: f32) {
+        if self.showing_instructions {
+            if ctx.input.key(Key::Space).went_down {
+                self.showing_instructions = false;
+            }
+            return;
+        }
         physics::update_paddles(self, ctx, dt);
         physics::update_ball(self, dt);
     }
 
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
-        drawing::render_court(out, self.paddle_l, self.paddle_r, self.ball);
-        drawing::render_scores(out, self.score_l, self.score_r, self.font_style);
+        if self.showing_instructions {
+            drawing::render_instructions(out, self.font_style);
+        } else {
+            drawing::render_court(out, self.paddle_l, self.paddle_r, self.ball);
+            drawing::render_scores(out, self.score_l, self.score_r, self.font_style);
+        }
     }
 }

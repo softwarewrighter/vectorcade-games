@@ -57,3 +57,21 @@ pub fn render_scores(out: &mut Vec<DrawCmd>, score_l: u32, score_r: u32, style: 
         style,
     });
 }
+
+pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+    let white = Rgba::WHITE;
+    let lines = [
+        ("PONG", -0.12, 0.6, 24.0),
+        ("2 PLAYER GAME", -0.28, 0.35, 14.0),
+        ("LEFT PADDLE", -0.25, 0.1, 12.0),
+        ("W - UP    S - DOWN", -0.38, -0.05, 12.0),
+        ("RIGHT PADDLE", -0.28, -0.25, 12.0),
+        ("UP/DOWN ARROWS", -0.32, -0.4, 12.0),
+        ("PRESS SPACE TO START", -0.42, -0.7, 14.0),
+    ];
+    for (text, x, y, size) in lines {
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(x, y), text: text.to_string(), size_px: size, color: white, style,
+        });
+    }
+}

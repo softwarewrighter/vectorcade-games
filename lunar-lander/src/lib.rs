@@ -10,6 +10,7 @@ use vectorcade_shared::{
     draw::DrawCmd,
     font::FontStyleId,
     game::{Game, GameCtx, GameMeta},
+    input::Key,
 };
 
 use lander::Lander;
@@ -18,6 +19,7 @@ use terrain::Terrain;
 /// Game state enumeration.
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum GameState {
+    Instructions,
     Playing,
     Landed,
     Crashed,
@@ -41,7 +43,7 @@ impl LunarLander {
         Self {
             lander: Lander::new(),
             terrain: Terrain::new(),
-            state: GameState::Playing,
+            state: GameState::Instructions,
             score: 0,
             font_style: FontStyleId::ATARI,
         }
@@ -56,14 +58,18 @@ impl Game for LunarLander {
     fn reset(&mut self, ctx: &mut GameCtx) {
         self.lander = Lander::new();
         self.terrain = Terrain::generate(ctx.rng);
-        self.state = GameState::Playing;
+        self.state = GameState::Instructions;
         self.score = 0;
     }
 
     fn update(&mut self, ctx: &mut GameCtx, dt: f32) {
-        if self.state != GameState::Playing {
+        if self.state == GameState::Instructions {
+            if ctx.input.key(Key::Space).went_down {
+                self.state = GameState::Playing;
+            }
             return;
         }
+        if self.state != GameState::Playing { return; }
         physics::update_lander(&mut self.lander, ctx, dt);
         self.state = physics::check_landing(&self.lander, &self.terrain);
         if self.state == GameState::Landed {
@@ -73,6 +79,10 @@ impl Game for LunarLander {
 
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
+        if self.state == GameState::Instructions {
+            rendering::render_instructions(out, self.font_style);
+            return;
+        }
         rendering::render_terrain(out, &self.terrain);
         rendering::render_lander(out, &self.lander);
         rendering::render_hud(out, &self.lander, self.font_style);

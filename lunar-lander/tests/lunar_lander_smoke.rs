@@ -1,4 +1,4 @@
-use lunar_lander::LunarLander;
+use lunar_lander::{LunarLander, GameState};
 use vectorcade_shared::Xorshift64;
 use vectorcade_shared::game::{AudioOut, Game, GameCtx, ScreenInfo};
 use vectorcade_shared::input::{Axis, Button, InputState, Key};
@@ -27,6 +27,7 @@ fn lunar_lander_advances() {
     };
     let mut g = LunarLander::new();
     g.reset(&mut ctx);
+    g.state = GameState::Playing; // Skip instructions for test
     assert!(!g.terrain.points.is_empty(), "should generate terrain");
     let y0 = g.lander.pos.y;
     g.update(&mut ctx, 0.016);
