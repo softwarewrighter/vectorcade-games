@@ -10,3 +10,4 @@ vectorcade-shared = { version = "0.1.0" }
 pong = { path = "../pong" }
 asteroids = { path = "../asteroids" }
 lunar-lander = { path = "../lunar-lander" }
+chess-demo = { path = "../chess-demo" }

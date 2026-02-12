@@ -13,6 +13,7 @@
 | **Lunar Lander** | Complete | Gravity/thrust physics, smoke test passing |
 | **Battlezone** | Not Started | Planned |
 | **Tempest** | Not Started | Planned |
+| **Chess Demo** | Complete | Static vector chess board display |
 
 Legend: [x] Complete | [~] In Progress | [ ] Not Started
 
@@ -33,6 +34,7 @@ Dependencies are available in sibling repos:
 | pong | ~200 | Pong game logic | Complete |
 | asteroids | ~630 | Asteroids game logic | Complete |
 | lunar-lander | ~280 | Lunar Lander game logic | Complete |
+| chess-demo | ~180 | Vector chess board demo | Complete |
 
 ## Game Implementation Progress
 
@@ -91,6 +93,16 @@ Dependencies are available in sibling repos:
 ### Tempest
 *Not started*
 
+### Chess Demo
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Board rendering | Done | 8x8 grid with dot-pattern dark squares |
+| Piece vectors | Done | King, Queen, Rook, Bishop, Knight, Pawn |
+| Starting position | Done | Valid chess starting setup |
+| File/rank labels | Done | A-H, 1-8 labels |
+| Smoke test | Done | chess_demo_smoke.rs |
+
 ## Test Coverage
 
 | Game | Smoke | Determinism | Edge Cases | Integration |
@@ -122,6 +134,7 @@ Dependencies are available in sibling repos:
 
 | Date | Change |
 |------|--------|
+| 2026-02-12 | Chess Demo implementation complete |
 | 2026-02-12 | Lunar Lander implementation complete |
 | 2026-02-12 | Asteroids implementation complete |
 | 2026-02-12 | Dependencies (shared, fonts) now available |
