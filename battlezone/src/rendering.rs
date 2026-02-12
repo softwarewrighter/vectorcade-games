@@ -156,7 +156,7 @@ fn render_enemy(out: &mut Vec<DrawCmd>, enemy: &Enemy, player_pos: Vec3, player_
     draw_line_3d(out, turret_base, gun_end);
 }
 
-/// Render player shots as small bright points.
+/// Render player shots as bright crosses that scale with distance.
 pub fn render_shots(out: &mut Vec<DrawCmd>, shots: &[Projectile3D], player_pos: Vec3, player_angle: f32) {
     for shot in shots {
         if !shot.alive { continue; }
@@ -164,17 +164,18 @@ pub fn render_shots(out: &mut Vec<DrawCmd>, shots: &[Projectile3D], player_pos: 
         let rotated = rotate_point_y(rel, -player_angle);
         if rotated.z > -0.5 { continue; } // Behind camera
         if let Some(screen_pos) = project_persp(rotated, FOV, ASPECT) {
-            // Draw shot as a small cross
-            let size = 0.02;
+            // Draw shot as a cross - size decreases with distance
+            let dist = (-rotated.z).max(1.0);
+            let size = 0.08 / dist;
             out.push(DrawCmd::Polyline {
                 pts: vec![screen_pos - Vec2::new(size, 0.0), screen_pos + Vec2::new(size, 0.0)],
                 closed: false,
-                stroke: Stroke::new(GREEN, 3.0),
+                stroke: Stroke::new(GREEN, 4.0),
             });
             out.push(DrawCmd::Polyline {
                 pts: vec![screen_pos - Vec2::new(0.0, size), screen_pos + Vec2::new(0.0, size)],
                 closed: false,
-                stroke: Stroke::new(GREEN, 3.0),
+                stroke: Stroke::new(GREEN, 4.0),
             });
         }
     }

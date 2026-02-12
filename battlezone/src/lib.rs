@@ -134,8 +134,10 @@ fn update_player(game: &mut Battlezone, ctx: &GameCtx, dt: f32) {
     game.fire_cooldown -= dt;
     if ctx.input.key(Key::Space).went_down && game.fire_cooldown <= 0.0 {
         game.fire_cooldown = 0.5;
-        // Fire a projectile in the direction we're facing
-        let shot = Projectile3D::new(game.pos, dir, 30.0, 50.0);
+        // Fire a projectile from gun barrel height, slightly in front of player
+        let barrel_height = Vec3::new(0.0, 0.8, 0.0);
+        let start_pos = game.pos + barrel_height + dir * 1.0;
+        let shot = Projectile3D::new(start_pos, dir, 30.0, 50.0);
         game.shots.push(shot);
     }
 }
