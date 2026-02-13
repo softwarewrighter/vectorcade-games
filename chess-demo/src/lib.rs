@@ -27,7 +27,7 @@ impl ChessDemo {
 
 impl Game for ChessDemo {
     fn metadata(&self) -> GameMeta {
-        GameMeta { name: "Chess Demo", preferred_aspect: Some(1.0) }
+        GameMeta { name: "Chess Image", preferred_aspect: Some(1.0) }
     }
 
     fn reset(&mut self, _ctx: &mut GameCtx) {}
