@@ -55,6 +55,7 @@ pub struct Tempest {
     pub state: GameState,
     pub spawn_timer: f32,
     pub font_style: FontStyleId,
+    pub blink_timer: f32,
 }
 
 impl Default for Tempest {
@@ -74,6 +75,7 @@ impl Tempest {
             state: GameState::Instructions,
             spawn_timer: 0.0,
             font_style: FontStyleId::ATARI,
+            blink_timer: 0.0,
         }
     }
 
@@ -103,10 +105,12 @@ impl Game for Tempest {
         self.level = 1;
         self.state = GameState::Instructions;
         self.spawn_timer = 0.0;
+        self.blink_timer = 0.0;
     }
 
     fn update(&mut self, ctx: &mut GameCtx, dt: f32) {
         if self.state == GameState::Instructions {
+            self.blink_timer += dt;
             if ctx.input.key(Key::Space).went_down { self.state = GameState::Playing; }
             return;
         }
@@ -128,7 +132,7 @@ impl Game for Tempest {
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
         if self.state == GameState::Instructions {
-            rendering::render_instructions(out, self.font_style);
+            rendering::render_instructions(out, self.font_style, self.blink_timer);
             return;
         }
         rendering::render_tube(out, &self.tube);

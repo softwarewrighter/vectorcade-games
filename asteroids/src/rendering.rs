@@ -83,20 +83,20 @@ pub fn render_hud(out: &mut Vec<DrawCmd>, score: u32, lives: u8, style: FontStyl
     out.push(DrawCmd::Text {
         pos: Vec2::new(-0.9, 0.85),
         text: format!("{:05}", score),
-        size_px: 16.0,
+        size_px: 64.0,
         color: WHITE,
         style,
     });
     for i in 0..lives {
-        let pos = Vec2::new(-0.9 + i as f32 * 0.05, 0.75);
+        let pos = Vec2::new(-0.9 + i as f32 * 0.08, 0.70);
         out.push(DrawCmd::Polyline {
             pts: vec![
-                pos + Vec2::new(0.015, 0.0),
-                pos + Vec2::new(-0.01, 0.008),
-                pos + Vec2::new(-0.01, -0.008),
+                pos + Vec2::new(0.025, 0.0),
+                pos + Vec2::new(-0.015, 0.012),
+                pos + Vec2::new(-0.015, -0.012),
             ],
             closed: true,
-            stroke: Stroke::new(WHITE, 1.0),
+            stroke: Stroke::new(WHITE, 2.0),
         });
     }
 }
@@ -111,18 +111,23 @@ pub fn render_game_over(out: &mut Vec<DrawCmd>, style: FontStyleId) {
     });
 }
 
-pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId, blink_timer: f32) {
     let lines = [
         ("ASTEROIDS", -0.35, 0.6, 96.0),
         ("LEFT/RIGHT - ROTATE", -0.70, 0.25, 48.0),
         ("UP - THRUST", -0.40, 0.05, 48.0),
         ("SPACE - FIRE", -0.42, -0.15, 48.0),
         ("DESTROY ALL ASTEROIDS", -0.75, -0.4, 48.0),
-        ("PRESS SPACE TO START", -0.70, -0.7, 56.0),
     ];
     for (text, x, y, size) in lines {
         out.push(DrawCmd::Text {
             pos: Vec2::new(x, y), text: text.to_string(), size_px: size, color: WHITE, style,
+        });
+    }
+    // Blinking "PRESS SPACE TO START"
+    if (blink_timer % 1.0) < 0.6 {
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(-0.70, -0.7), text: "PRESS SPACE TO START".to_string(), size_px: 56.0, color: WHITE, style,
         });
     }
 }

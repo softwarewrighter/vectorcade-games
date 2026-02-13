@@ -30,6 +30,7 @@ pub struct Asteroids {
     pub game_over: bool,
     pub respawn_timer: f32,
     pub showing_instructions: bool,
+    pub blink_timer: f32,
 }
 
 impl Default for Asteroids {
@@ -52,6 +53,7 @@ impl Asteroids {
             game_over: false,
             respawn_timer: 0.0,
             showing_instructions: true,
+            blink_timer: 0.0,
         }
     }
 
@@ -82,11 +84,13 @@ impl Game for Asteroids {
         self.game_over = false;
         self.respawn_timer = 0.0;
         self.showing_instructions = true;
+        self.blink_timer = 0.0;
         self.spawn_level_asteroids(ctx);
     }
 
     fn update(&mut self, ctx: &mut GameCtx, dt: f32) {
         if self.showing_instructions {
+            self.blink_timer += dt;
             if ctx.input.key(Key::Space).went_down {
                 self.showing_instructions = false;
             }
@@ -108,7 +112,7 @@ impl Game for Asteroids {
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
         if self.showing_instructions {
-            rendering::render_instructions(out, self.font_style);
+            rendering::render_instructions(out, self.font_style, self.blink_timer);
             return;
         }
         if !self.game_over && self.respawn_timer <= 0.0 {

@@ -14,18 +14,27 @@ const FOV: f32 = 1.0;
 const ASPECT: f32 = 4.0 / 3.0;
 
 /// Render instruction screen.
-pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId, blink_timer: f32) {
+    // Title in RED
+    out.push(DrawCmd::Text {
+        pos: Vec2::new(-0.42, 0.55), text: "BATTLEZONE".to_string(), size_px: 96.0, color: RED, style,
+    });
+    // Instructions in GREEN
     let lines = [
-        ("BATTLEZONE", -0.42, 0.55, 96.0),
         ("LEFT/RIGHT: ROTATE", -0.65, 0.25, 48.0),
         ("UP/DOWN: MOVE", -0.48, 0.05, 48.0),
         ("SPACE: FIRE", -0.38, -0.15, 48.0),
         ("DESTROY ENEMY TANKS", -0.70, -0.4, 48.0),
-        ("PRESS SPACE TO START", -0.70, -0.7, 56.0),
     ];
     for (text, x, y, size) in lines {
         out.push(DrawCmd::Text {
             pos: Vec2::new(x, y), text: text.to_string(), size_px: size, color: GREEN, style,
+        });
+    }
+    // Blinking "PRESS SPACE TO START"
+    if (blink_timer % 1.0) < 0.6 {
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(-0.70, -0.7), text: "PRESS SPACE TO START".to_string(), size_px: 56.0, color: GREEN, style,
         });
     }
 }
@@ -59,14 +68,14 @@ pub fn render_hud(out: &mut Vec<DrawCmd>, score: u32, lives: u8, style: FontStyl
     out.push(DrawCmd::Text {
         pos: Vec2::new(-0.95, 0.85),
         text: format!("SCORE: {}", score),
-        size_px: 14.0,
+        size_px: 56.0,
         color: RED,
         style,
     });
     out.push(DrawCmd::Text {
         pos: Vec2::new(0.55, 0.85),
         text: format!("LIVES: {}", lives),
-        size_px: 14.0,
+        size_px: 56.0,
         color: RED,
         style,
     });

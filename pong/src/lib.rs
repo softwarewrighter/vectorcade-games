@@ -19,6 +19,7 @@ pub struct Pong {
     pub score_r: u32,
     pub font_style: FontStyleId,
     pub showing_instructions: bool,
+    pub blink_timer: f32,
 }
 
 impl Default for Pong {
@@ -38,6 +39,7 @@ impl Pong {
             score_r: 0,
             font_style: FontStyleId::ATARI,
             showing_instructions: true,
+            blink_timer: 0.0,
         }
     }
 }
@@ -58,10 +60,12 @@ impl Game for Pong {
         self.score_l = 0;
         self.score_r = 0;
         self.showing_instructions = true;
+        self.blink_timer = 0.0;
     }
 
     fn update(&mut self, ctx: &mut GameCtx, dt: f32) {
         if self.showing_instructions {
+            self.blink_timer += dt;
             if ctx.input.key(Key::Space).went_down {
                 self.showing_instructions = false;
             }
@@ -74,7 +78,7 @@ impl Game for Pong {
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
         if self.showing_instructions {
-            drawing::render_instructions(out, self.font_style);
+            drawing::render_instructions(out, self.font_style, self.blink_timer);
         } else {
             drawing::render_court(out, self.paddle_l, self.paddle_r, self.ball);
             drawing::render_scores(out, self.score_l, self.score_r, self.font_style);

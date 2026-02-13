@@ -32,6 +32,7 @@ pub struct LunarLander {
     pub state: GameState,
     pub score: u32,
     pub font_style: FontStyleId,
+    pub blink_timer: f32,
 }
 
 impl Default for LunarLander {
@@ -46,6 +47,7 @@ impl LunarLander {
             state: GameState::Instructions,
             score: 0,
             font_style: FontStyleId::ATARI,
+            blink_timer: 0.0,
         }
     }
 }
@@ -60,10 +62,12 @@ impl Game for LunarLander {
         self.terrain = Terrain::generate(ctx.rng);
         self.state = GameState::Instructions;
         self.score = 0;
+        self.blink_timer = 0.0;
     }
 
     fn update(&mut self, ctx: &mut GameCtx, dt: f32) {
         if self.state == GameState::Instructions {
+            self.blink_timer += dt;
             if ctx.input.key(Key::Space).went_down {
                 self.state = GameState::Playing;
             }
@@ -80,7 +84,7 @@ impl Game for LunarLander {
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
         if self.state == GameState::Instructions {
-            rendering::render_instructions(out, self.font_style);
+            rendering::render_instructions(out, self.font_style, self.blink_timer);
             return;
         }
         rendering::render_terrain(out, &self.terrain);

@@ -45,31 +45,36 @@ pub fn render_scores(out: &mut Vec<DrawCmd>, score_l: u32, score_r: u32, style: 
     out.push(DrawCmd::Text {
         pos: Vec2::new(-0.2, 0.85),
         text: format!("{}", score_l),
-        size_px: 18.0,
+        size_px: 72.0,
         color: Rgba::WHITE,
         style,
     });
     out.push(DrawCmd::Text {
         pos: Vec2::new(0.15, 0.85),
         text: format!("{}", score_r),
-        size_px: 18.0,
+        size_px: 72.0,
         color: Rgba::WHITE,
         style,
     });
 }
 
-pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId, blink_timer: f32) {
     let white = Rgba::WHITE;
     let lines = [
         ("PONG", -0.12, 0.6, 96.0),
         ("2 PLAYER GAME", -0.50, 0.35, 56.0),
         ("LEFT PADDLE: W/S", -0.50, 0.1, 48.0),
         ("RIGHT PADDLE: UP/DOWN", -0.65, -0.15, 48.0),
-        ("PRESS SPACE TO START", -0.70, -0.6, 56.0),
     ];
     for (text, x, y, size) in lines {
         out.push(DrawCmd::Text {
             pos: Vec2::new(x, y), text: text.to_string(), size_px: size, color: white, style,
+        });
+    }
+    // Blinking "PRESS SPACE TO START"
+    if (blink_timer % 1.0) < 0.6 {
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(-0.70, -0.6), text: "PRESS SPACE TO START".to_string(), size_px: 56.0, color: white, style,
         });
     }
 }

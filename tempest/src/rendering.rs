@@ -9,17 +9,22 @@ use vectorcade_shared::{
 use crate::{BLUE, CYAN, GREEN, MAGENTA, RED, YELLOW, Blaster, Shot, enemies::{Enemy, EnemyKind}, tube::Tube};
 
 /// Render instruction screen.
-pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId, blink_timer: f32) {
     let lines = [
         ("TEMPEST", -0.30, 0.55, 96.0, YELLOW),
         ("LEFT/RIGHT: MOVE", -0.60, 0.25, 48.0, BLUE),
         ("SPACE: FIRE", -0.38, 0.0, 48.0, BLUE),
-        ("DESTROY ALL ENEMIES", -0.70, -0.25, 48.0, BLUE),
-        ("PRESS SPACE TO START", -0.70, -0.6, 56.0, YELLOW),
+        ("DESTROY ALL ENEMIES", -0.70, -0.25, 48.0, RED),
     ];
     for (text, x, y, size, color) in lines {
         out.push(DrawCmd::Text {
             pos: Vec2::new(x, y), text: text.to_string(), size_px: size, color, style,
+        });
+    }
+    // Blinking "PRESS SPACE TO START"
+    if (blink_timer % 1.0) < 0.6 {
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(-0.70, -0.6), text: "PRESS SPACE TO START".to_string(), size_px: 56.0, color: YELLOW, style,
         });
     }
 }
@@ -95,14 +100,14 @@ pub fn render_hud(out: &mut Vec<DrawCmd>, score: u32, lives: u8, level: u8, styl
     out.push(DrawCmd::Text {
         pos: Vec2::new(-0.95, 0.85),
         text: format!("{:06}", score),
-        size_px: 14.0,
+        size_px: 56.0,
         color: CYAN,
         style,
     });
     out.push(DrawCmd::Text {
         pos: Vec2::new(0.55, 0.85),
         text: format!("L{} x{}", level, lives),
-        size_px: 14.0,
+        size_px: 56.0,
         color: CYAN,
         style,
     });

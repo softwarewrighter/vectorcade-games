@@ -74,21 +74,21 @@ pub fn render_hud(out: &mut Vec<DrawCmd>, lander: &Lander, style: FontStyleId) {
     out.push(DrawCmd::Text {
         pos: Vec2::new(-0.95, 0.9),
         text: format!("FUEL: {:3.0}", lander.fuel),
-        size_px: 14.0,
+        size_px: 56.0,
         color: WHITE,
         style,
     });
     out.push(DrawCmd::Text {
-        pos: Vec2::new(-0.95, 0.8),
+        pos: Vec2::new(-0.95, 0.75),
         text: format!("VEL: {:.2}", lander.vel.length()),
-        size_px: 12.0,
+        size_px: 48.0,
         color: WHITE,
         style,
     });
     out.push(DrawCmd::Text {
-        pos: Vec2::new(0.5, 0.9),
+        pos: Vec2::new(0.35, 0.9),
         text: format!("ALT: {:.2}", lander.pos.y + 0.9),
-        size_px: 12.0,
+        size_px: 48.0,
         color: WHITE,
         style,
     });
@@ -121,7 +121,7 @@ pub fn render_crashed(out: &mut Vec<DrawCmd>, style: FontStyleId) {
     });
 }
 
-pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
+pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId, blink_timer: f32) {
     let lines = [
         ("LUNAR LANDER", -0.50, 0.65, 96.0),
         ("LEFT/RIGHT - ROTATE", -0.70, 0.35, 48.0),
@@ -129,11 +129,16 @@ pub fn render_instructions(out: &mut Vec<DrawCmd>, style: FontStyleId) {
         ("LAND ON FLAT PADS", -0.62, -0.05, 48.0),
         ("LAND SLOWLY AND LEVEL", -0.75, -0.25, 48.0),
         ("CONSERVE FUEL FOR BONUS", -0.82, -0.45, 48.0),
-        ("PRESS SPACE TO START", -0.70, -0.75, 56.0),
     ];
     for (text, x, y, size) in lines {
         out.push(DrawCmd::Text {
             pos: Vec2::new(x, y), text: text.to_string(), size_px: size, color: WHITE, style,
+        });
+    }
+    // Blinking "PRESS SPACE TO START"
+    if (blink_timer % 1.0) < 0.6 {
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(-0.70, -0.75), text: "PRESS SPACE TO START".to_string(), size_px: 56.0, color: WHITE, style,
         });
     }
 }

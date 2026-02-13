@@ -41,6 +41,7 @@ pub struct Battlezone {
     pub shots: Vec<Projectile3D>,
     pub fire_cooldown: f32,
     pub font_style: FontStyleId,
+    pub blink_timer: f32,
 }
 
 impl Default for Battlezone {
@@ -60,6 +61,7 @@ impl Battlezone {
             shots: Vec::new(),
             fire_cooldown: 0.0,
             font_style: FontStyleId::ATARI,
+            blink_timer: 0.0,
         }
     }
 
@@ -86,11 +88,13 @@ impl Game for Battlezone {
         self.obstacles.clear();
         self.shots.clear();
         self.fire_cooldown = 0.0;
+        self.blink_timer = 0.0;
         world::spawn_obstacles(&mut self.obstacles, ctx.rng);
     }
 
     fn update(&mut self, ctx: &mut GameCtx, dt: f32) {
         if self.state == GameState::Instructions {
+            self.blink_timer += dt;
             if ctx.input.key(Key::Space).went_down { self.state = GameState::Playing; }
             return;
         }
@@ -105,7 +109,7 @@ impl Game for Battlezone {
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
         if self.state == GameState::Instructions {
-            rendering::render_instructions(out, self.font_style);
+            rendering::render_instructions(out, self.font_style, self.blink_timer);
             return;
         }
         rendering::render_horizon(out);
