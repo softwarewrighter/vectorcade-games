@@ -37,14 +37,23 @@ impl Game for Contents {
     fn render(&mut self, _ctx: &mut GameCtx, out: &mut Vec<DrawCmd>) {
         out.push(DrawCmd::Clear { color: Rgba::BLACK });
 
+        // Large title at top
+        out.push(DrawCmd::Text {
+            pos: Vec2::new(-0.92, 0.75),
+            text: "VECTOR ARCADE PLATFORM".to_string(),
+            size_px: 64.0,
+            color: WHITE,
+            style: self.font_style,
+        });
+
+        // Contents list
         let lines = [
-            ("> CONTENTS <", 0.55),
-            ("- CHESS BOARD IMAGE", 0.30),
-            ("- PONG", 0.15),
-            ("- ASTEROIDS", 0.00),
-            ("- LUNAR LANDER", -0.15),
-            ("- BATTLEZONE", -0.30),
-            ("- TEMPEST", -0.45),
+            ("- CHESS BOARD IMAGE", 0.35),
+            ("- PONG", 0.20),
+            ("- ASTEROIDS", 0.05),
+            ("- LUNAR LANDER", -0.10),
+            ("- BATTLEZONE", -0.25),
+            ("- TEMPEST", -0.40),
         ];
 
         for (text, y) in lines {
